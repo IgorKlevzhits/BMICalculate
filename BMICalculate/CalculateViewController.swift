@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CalculateViewController: UIViewController {
     
     // MARK: - UI
     
@@ -40,16 +40,7 @@ class ViewController: UIViewController {
         return element
     }()
     
-    private lazy var calculateButton: UIButton = {
-        let element = UIButton(type: .system)
-        element.tintColor = .white
-        element.backgroundColor = UIColor(red: 0.45, green: 0.45, blue: 0.82, alpha: 1.0)
-        element.layer.cornerRadius = 10
-        element.titleLabel?.font = .systemFont(ofSize: 20)
-        element.addTarget(self, action: #selector(calculateButtonTapped), for: .touchUpInside)
-        element.translatesAutoresizingMaskIntoConstraints = false
-        return element
-    }()
+    private let calculateButton = UIButton(isBackgroundWhite: false)
     
     // MARK: - Life Cycle
     
@@ -61,11 +52,15 @@ class ViewController: UIViewController {
     }
     
     @objc private func calculateButtonTapped() {
-        print("Tap-tap")
+        
+        let resultVC = ResultViewController()
+        resultVC.modalTransitionStyle = .flipHorizontal
+        resultVC.modalPresentationStyle = .fullScreen
+        present(resultVC, animated: true)
     }
 }
 
-extension ViewController {
+extension CalculateViewController {
     
     private func setViews() {
         
@@ -104,7 +99,7 @@ extension ViewController {
         weightTitleLabel.text = "Weight"
         weightNumberLabel.text = "100 kg"
         
-        calculateButton.setTitle("CALCULATE", for: .normal)
+        calculateButton.addTarget(self, action: #selector(calculateButtonTapped), for: .touchUpInside)
     }
     
     private func setupConstraints() {
@@ -130,35 +125,3 @@ extension ViewController {
     }
 }
 
-extension UIStackView {
-    convenience init(axis: NSLayoutConstraint.Axis, distribution: UIStackView.Distribution, subViews: [UIView]) {
-        self.init(arrangedSubviews: subViews)
-        self.axis = axis
-        self.distribution = distribution
-        self.spacing = 0
-        self.translatesAutoresizingMaskIntoConstraints = false
-    }
-}
-
-extension UILabel {
-    convenience init(aligment: NSTextAlignment) {
-        self.init()
-        self.textAlignment = aligment
-        self.font = .systemFont(ofSize: 17, weight: .light)
-        self.textColor = .darkGray
-        self.translatesAutoresizingMaskIntoConstraints = false
-    }
-}
-
-extension UISlider {
-    convenience init(maxValue: Float) {
-        self.init()
-        
-        self.maximumValue = maxValue
-        self.value = maxValue / 2
-        self.thumbTintColor = UIColor(red: 0.45, green: 0.45, blue: 0.82, alpha: 0.5)
-        self.minimumTrackTintColor = UIColor(red: 0.45, green: 0.45, blue: 0.82, alpha: 0.5)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        
-    }
-}
