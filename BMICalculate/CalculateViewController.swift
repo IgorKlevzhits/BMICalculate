@@ -54,7 +54,7 @@ class CalculateViewController: UIViewController {
     @objc private func calculateButtonTapped() {
         
         let resultVC = ResultViewController()
-        resultVC.modalTransitionStyle = .flipHorizontal
+        resultVC.modalTransitionStyle = .coverVertical
         resultVC.modalPresentationStyle = .fullScreen
         present(resultVC, animated: true)
     }
