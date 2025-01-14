@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct CalculateBrain {
+struct CalculatorBrain {
     
     private var bmi: BMI?
     
@@ -15,7 +15,7 @@ struct CalculateBrain {
         let bmiValue = weight / (height * height)
         switch bmiValue {
         case 0...18.5: bmi = BMI(value: bmiValue, advice: "Eat more pies", color: .systemBlue)
-        case 0...18.5: bmi = BMI(value: bmiValue, advice: "Fit as a fiddle!", color: .systemGreen)
+        case 0...24.9: bmi = BMI(value: bmiValue, advice: "Fit as a fiddle!", color: .systemGreen)
         default: bmi = BMI(value: bmiValue, advice: "Eat less pies", color: .red)
         }
     }

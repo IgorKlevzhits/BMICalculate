@@ -42,6 +42,10 @@ class CalculateViewController: UIViewController {
     
     private let calculateButton = UIButton(isBackgroundWhite: false)
     
+    // MARK: - Private Properties
+    
+    private var calculatorBrain = CalculatorBrain()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -51,11 +55,29 @@ class CalculateViewController: UIViewController {
         setupConstraints()
     }
     
+    @objc private func heightSliderChanged(_ sender: UISlider){
+        heightNumberLabel.text = String(format: "%.2f", sender.value) + " m"
+    }
+    
+    @objc private func weightSliderChanged(_ sender: UISlider){
+        weightNumberLabel.text = String(format: "%.0f", sender.value) + " Kg"
+    }
+    
     @objc private func calculateButtonTapped() {
+        
+        let height = heightSlider.value
+        let weight = weightSlider.value
+        
+        calculatorBrain.calculateBMI(height: height, weight: weight)
         
         let resultVC = ResultViewController()
         resultVC.modalTransitionStyle = .coverVertical
         resultVC.modalPresentationStyle = .fullScreen
+        
+        resultVC.bmiValue = calculatorBrain.getBMIValue()
+        resultVC.advice = calculatorBrain.getAdvice()
+        resultVC.color = calculatorBrain.getColor()
+        
         present(resultVC, animated: true)
     }
 }
@@ -100,6 +122,9 @@ extension CalculateViewController {
         weightNumberLabel.text = "100 kg"
         
         calculateButton.addTarget(self, action: #selector(calculateButtonTapped), for: .touchUpInside)
+        
+        heightSlider.addTarget(self, action: #selector(heightSliderChanged), for: .valueChanged)
+        weightSlider.addTarget(self, action: #selector(weightSliderChanged), for: .valueChanged)
     }
     
     private func setupConstraints() {

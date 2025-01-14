@@ -52,6 +52,12 @@ class ResultViewController: UIViewController {
     
     private let recalculateButton = UIButton(isBackgroundWhite: true)
     
+    // MARK: - Public Properties
+    
+    var bmiValue: String?
+    var advice: String?
+    var color: UIColor?
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -68,7 +74,13 @@ class ResultViewController: UIViewController {
 // MARK: - Set Views
 
 extension ResultViewController {
+    
     private func setViews() {
+        
+        resultLabel.text = bmiValue
+        descriptionLabel.text = advice
+        view.backgroundColor = color
+        
         mainStackView = UIStackView(
             axis: .vertical,
             distribution: .fillProportionally,
@@ -84,10 +96,6 @@ extension ResultViewController {
         view.addSubview(recalculateButton)
         
         titleLabel.text = "YOUR RESULT"
-        resultLabel.text = "19.5"
-        descriptionLabel.text = "EAT SOME MORE SNACKS!"
-        
-        view.backgroundColor = .blue
         
         recalculateButton.addTarget(self, action: #selector(recalculateButtonTapped), for: .touchUpInside)
     }
